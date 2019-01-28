@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const booksController = require('./controllers/books_controller.js')
 const db = mongoose.connection
+const session = require('express-session')
 
 // Port
 const PORT = process.env.PORT || 3000
@@ -28,6 +29,11 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use('/books',booksController)
+app.use(session({
+  secret: "feedmeseymour",
+  resave: false,
+  saveUninitialized: false
+}))
 
 app.listen(3000, () => {
   console.log('listening...')

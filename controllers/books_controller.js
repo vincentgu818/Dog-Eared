@@ -6,7 +6,7 @@ const rp = require('request-promise')
 
 const bookQueries = []
 const bookLinks = []
-const seedBooks = []
+const seedBooks = require('../models/seed_books.js')
 
 
 // request('https://www.googleapis.com/books/v1/volumes?q=Heather+Morris', (error, response, body) => {
