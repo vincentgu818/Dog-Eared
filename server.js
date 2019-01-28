@@ -35,6 +35,6 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('listening...')
 })

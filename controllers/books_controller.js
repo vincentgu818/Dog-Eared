@@ -148,10 +148,13 @@ router.put('/:id', (req, res) => {
   })
 })
 
-// Buy route
-router.put('/:id/buy', (req, res) => {
-  Book.findByIdAndUpdate(req.params.id, { $inc: { qty: -1 } }, (err, updatedBook) => {
-    res.redirect('/books/'+req.params.id)
+// Add to Cart route
+router.put('/:id/add_to_cart', (req, res) => {
+  Book.findById(req.params.id, (err, foundBook) => {
+    if(!req.session.cart) req.session.cart = []
+    req.session.cart.push(foundBook)
+    console.log();
+    res.redirect('/books/')
   })
 })
 
