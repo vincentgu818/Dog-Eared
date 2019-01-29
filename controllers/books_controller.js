@@ -15,7 +15,7 @@ router.use(session({
   saveUninitialized: false
 }))
 
-rp('https://www.googleapis.com/books/v1/volumes?q=Becoming+Obama').
+rp('https://www.googleapis.com/books/v1/volumes?q=Educated+Westover').
   then((body) => {
     let jsonBody = JSON.parse(body)
      for(let googleBook of jsonBody.items) {
