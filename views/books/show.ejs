@@ -2,13 +2,13 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Mongoose Store</title>
+    <title>Dog Eared</title>
     <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
     <div id=show_container>
       <div class=show_book>
-        <h1><%=book.name%></h1>
+        <h1><%=book.title%></h1>
         <img src="<%=book.img%>"><br>
         <div><%=book.description%></div>
         <div>Price: $<%=book.price%></div>
@@ -16,8 +16,8 @@
           <% if(book.qty > 0) { %>
             <%=book.qty%> in stock
           </div>
-          <form action="/books/<%=book.id%>/buy?_method=PUT" method="POST">
-            <input class="buy_button" type="submit" value="Buy">
+          <form action="/users/<%=book.id%>/add_to_cart?_method=PUT" method="POST">
+            <input class="buy_button" type="submit" value="Add to Cart">
           </form>
           <% } else { %>
             Out of stock

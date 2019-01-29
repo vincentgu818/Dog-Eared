@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dog-Eared - Shopping Cart</title>
+    <link rel="stylesheet" href="/css/master.css">
+  </head>
+  <body>
+    <h1 id="index_h1">Your Shopping Cart</h1>
+    <div id="index_container">
+      <% let cartTotal = 0
+      if(contents.length === 0) { %>
+        <div>Your cart is empty!</div>
+      <% } else {
+      for(let book of contents) {
+        cartTotal += book.price %>
+        <div>
+          <h4><%=book.title%></h4>
+          <a href="/books/<%=book._id%>"><img src="<%=book.img%>"></a>
+          $<%=book.price%>
+        </div>
+      <% } } %>
+      <div>Cart Total: $<%=cartTotal%></div>
+      <a href="/books"><- Continue Shopping</a>
+      <a href="/books">Checkout -></a>
+    </div>
+  </body>
+</html>

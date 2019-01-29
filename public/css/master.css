@@ -5,6 +5,12 @@ body {
 
 a {
   text-decoration: none;
+  margin: 0 30px;
+}
+
+img {
+  height: 200px;
+  width: auto;
 }
 
 /* ----- INDEX.EJS ----- */
@@ -21,7 +27,6 @@ a {
   flex-basis: 300px;
   background-color: khaki;
   color: #0047b3;
-  border-radius: 20px;
   margin: 20px;
 }
 

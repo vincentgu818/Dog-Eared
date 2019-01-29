@@ -2,18 +2,24 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Mongoose Store</title>
+    <title>Dog-Eared</title>
     <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
     <h1 id="index_h1">Dog-Eared</h1>
     <nav>
       <a href="/books/new">Add a Book</a>
+      <a href="/sessions/new">Log In</a></li>
+      <a href="/users/new">Register</a></li>
+      <a href="/users/cart">View Cart</a>
     </nav>
     <div id="index_container">
-      <% for(let book of books) { %>
+      <% while(books.length > 0) {
+        let i = Math.floor(Math.random()*books.length)
+        let book = books[i]
+        books.splice(i,1) %>
         <div>
-          <h4><%=book.name%></h4>
+          <h4><%=book.title%></h4>
           <a href="/books/<%=book.id%>"><img src="<%=book.img%>"></a>
           $<%=book.price%>
         </div>
