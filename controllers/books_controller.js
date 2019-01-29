@@ -15,36 +15,36 @@ router.use(session({
   saveUninitialized: false
 }))
 
-rp('https://www.googleapis.com/books/v1/volumes?q=Sapiens+Harari').
-  then((body) => {
-    let jsonBody = JSON.parse(body)
-     for(let googleBook of jsonBody.items) {
-
-       let book = {}
-
-       book.title = googleBook.volumeInfo.title
-       if(googleBook.volumeInfo.subtitle) {
-         book.title += ': '+googleBook.volumeInfo.subtitle
-       }
-
-      book.authors = googleBook.volumeInfo.authors
-
-      book.categories = googleBook.volumeInfo.categories
-
-      book.description = googleBook.volumeInfo.description
-
-      if(googleBook.volumeInfo.imageLinks) {
-        book.img = googleBook.volumeInfo.imageLinks.thumbnail
-      }
-
-      if(googleBook.saleInfo.listPrice) {
-        book.price = googleBook.saleInfo.listPrice.amount
-      }
-
-      seedBooks.push(book)
-    }
-  })
+// rp('https://www.googleapis.com/books/v1/volumes?q=Factfulness+Rosling').
+//   then((body) => {
+//     let jsonBody = JSON.parse(body)
+//      for(let googleBook of jsonBody.items) {
 //
+//        let book = {}
+//
+//        book.title = googleBook.volumeInfo.title
+//        if(googleBook.volumeInfo.subtitle) {
+//          book.title += ': '+googleBook.volumeInfo.subtitle
+//        }
+//
+//       book.authors = googleBook.volumeInfo.authors
+//
+//       book.categories = googleBook.volumeInfo.categories
+//
+//       book.description = googleBook.volumeInfo.description
+//
+//       if(googleBook.volumeInfo.imageLinks) {
+//         book.img = googleBook.volumeInfo.imageLinks.thumbnail
+//       }
+//
+//       if(googleBook.saleInfo.listPrice) {
+//         book.price = googleBook.saleInfo.listPrice.amount
+//       }
+//
+//       seedBooks.push(book)
+//     }
+//   })
+// //
 //
 const requestFromNYT = (body) => {
   let jsonBody = JSON.parse(body)
@@ -68,7 +68,7 @@ const requestOneFromGoogle = (htmlString) => {
 }
 //
 // Seed route
-router.get('/seed/', (req, res) => {
+router.get('/seed/:search', (req, res) => {
 //   let date = new Date('2011-02-13')
 //   // while(date < Date.now()) {
 //     month = date.getMonth()+1
@@ -105,9 +105,37 @@ router.get('/seed/', (req, res) => {
 //         console.log('Crawling Google failed...',err);
 //       })
 //   }
+rp('https://www.googleapis.com/books/v1/volumes?q='+req.params.search).
+  then((body) => {
+    let jsonBody = JSON.parse(body)
+     for(let googleBook of jsonBody.items) {
 
-  Book.create(seedBooks, (err, data) => {
-    res.send(data)
+       let book = {}
+
+       book.title = googleBook.volumeInfo.title
+       if(googleBook.volumeInfo.subtitle) {
+         book.title += ': '+googleBook.volumeInfo.subtitle
+       }
+
+      book.authors = googleBook.volumeInfo.authors
+
+      book.categories = googleBook.volumeInfo.categories
+
+      book.description = googleBook.volumeInfo.description
+
+      if(googleBook.volumeInfo.imageLinks) {
+        book.img = googleBook.volumeInfo.imageLinks.thumbnail
+      }
+
+      if(googleBook.saleInfo.listPrice) {
+        book.price = googleBook.saleInfo.listPrice.amount
+      }
+
+      seedBooks.push(book)
+    }
+    Book.create(seedBooks, (err, data) => {
+      res.send(data)
+    })
   })
 })
 
