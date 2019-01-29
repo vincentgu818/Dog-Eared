@@ -7,7 +7,7 @@ const session = require('express-session')
 
 const bookQueries = []
 const bookLinks = []
-const seedBooks = [] // require('../models/seed_books.js')
+let seedBooks = [] // require('../models/seed_books.js')
 
 router.use(session({
   secret: "thisisasecret",
