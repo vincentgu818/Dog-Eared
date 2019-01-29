@@ -15,7 +15,7 @@ router.use(session({
   saveUninitialized: false
 }))
 
-// rp('https://www.googleapis.com/books/v1/volumes?q=Factfulness+Rosling').
+// rp('https://www.googleapis.com/books/v1/volumes?q=').
 //   then((body) => {
 //     let jsonBody = JSON.parse(body)
 //      for(let googleBook of jsonBody.items) {
@@ -105,6 +105,7 @@ router.get('/seed/:search', (req, res) => {
 //         console.log('Crawling Google failed...',err);
 //       })
 //   }
+seedBooks = []
 rp('https://www.googleapis.com/books/v1/volumes?q='+req.params.search).
   then((body) => {
     let jsonBody = JSON.parse(body)
