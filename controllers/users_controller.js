@@ -10,8 +10,16 @@ router.use(session({
   saveUninitialized: false
 }))
 
+// New route
 router.get('/new', (req, res) => {
     res.render('users/new.ejs');
+});
+
+// Create route
+router.post('/', (req, res) => {
+    User.create(req.body, (err, createdUser)=>{
+        res.redirect('/');
+    });
 });
 
 // View cart route
@@ -33,12 +41,5 @@ router.put('/:id/add_to_cart', (req, res) => {
     res.redirect('/users/cart')
   })
 })
-
-//...farther down the page
-router.post('/', (req, res) => {
-    User.create(req.body, (err, createdUser)=>{
-        res.redirect('/');
-    });
-});
 
 module.exports = router

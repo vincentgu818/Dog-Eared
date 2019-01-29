@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const booksController = require('./controllers/books_controller.js')
 const usersController = require('./controllers/users_controller.js')
+const sessionsController = require('./controllers/sessions_controller.js')
 const db = mongoose.connection
 const session = require('express-session')
 
@@ -31,6 +32,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use('/books',booksController)
 app.use('/users',usersController)
+app.use('/sessions',sessionsController)
 app.use(session({
   secret: "thisisasecret",
   resave: false,

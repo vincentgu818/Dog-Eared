@@ -69,81 +69,44 @@ const requestOneFromGoogle = (htmlString) => {
 //
 // Seed route
 router.get('/seed/:search', (req, res) => {
-//   let date = new Date('2011-02-13')
-//   // while(date < Date.now()) {
-//     month = date.getMonth()+1
-//     if(month < 10) month = '0'+month
-//     day = date.getDate()+1
-//     if(day < 10) day = '0'+day
-//     let dateString = date.getFullYear()+'-'+month+'-'+day
-//     rp(`https://api.nytimes.com/svc/books/v3/lists/${dateString}/combined-print-and-e-book-fiction.json?api-key=UmQ5RKX68w8NirUBeXgGBfYJ8qi0Sxsp`)
-//       .then(requestFromNYT)
-//       .catch((err) => {
-//         console.log('Crawling NYT failed...',err);
-//       })
-//     // rp(`https://api.nytimes.com/svc/books/v3/lists/${dateString}/combined-print-and-e-book-nonfiction.json?api-key=UmQ5RKX68w8NirUBeXgGBfYJ8qi0Sxsp`)
-//     //   .then(requestFromNYT)
-//     //   .catch((err) => {
-//     //     console.log('Crawling NYT failed...',err);
-//     //   })
-//     date.setDate(date.getDate()+7)
-//   // }
-//
-//   for(let i=0; i<bookQueries.length; i++) {
-//     bookQueries[i] = bookQueries[i].split(' ').join('+')
-//     rp('https://www.googleapis.com/books/v1/volumes?q='+bookQueries[i])
-//       .then(requestFromGoogle)
-//       .catch((err) => {
-//         console.log('Crawling Google failed...',err);
-//       })
-//   }
-//
-//   for(let i=0; i<bookLinks.length; i++) {
-//     rp(bookLinks[i])
-//       .then(requestOneFromGoogle)
-//       .catch((err) => {
-//         console.log('Crawling Google failed...',err);
-//       })
-//   }
-seedBooks = []
-rp('https://www.googleapis.com/books/v1/volumes?q='+req.params.search).
-  then((body) => {
-    let jsonBody = JSON.parse(body)
-     for(let googleBook of jsonBody.items) {
+  seedBooks = []
+  rp('https://www.googleapis.com/books/v1/volumes?q='+req.params.search)
+    .then((body) => {
+      let jsonBody = JSON.parse(body)
+      for(let googleBook of jsonBody.items) {
+        let book = {}
 
-       let book = {}
+        book.title = googleBook.volumeInfo.title
+        if(googleBook.volumeInfo.subtitle) {
+          book.title += ': '+googleBook.volumeInfo.subtitle
+        }
 
-       book.title = googleBook.volumeInfo.title
-       if(googleBook.volumeInfo.subtitle) {
-         book.title += ': '+googleBook.volumeInfo.subtitle
-       }
+        book.authors = googleBook.volumeInfo.authors
 
-      book.authors = googleBook.volumeInfo.authors
+        book.categories = googleBook.volumeInfo.categories
 
-      book.categories = googleBook.volumeInfo.categories
+        book.description = googleBook.volumeInfo.description
 
-      book.description = googleBook.volumeInfo.description
+        if(googleBook.volumeInfo.imageLinks) {
+          book.img = googleBook.volumeInfo.imageLinks.thumbnail
+        }
 
-      if(googleBook.volumeInfo.imageLinks) {
-        book.img = googleBook.volumeInfo.imageLinks.thumbnail
+        if(googleBook.saleInfo.listPrice) {
+          book.price = googleBook.saleInfo.listPrice.amount
+        }
+
+        seedBooks.push(book)
       }
-
-      if(googleBook.saleInfo.listPrice) {
-        book.price = googleBook.saleInfo.listPrice.amount
-      }
-
-      seedBooks.push(book)
-    }
-    Book.create(seedBooks, (err, data) => {
-      res.send(data)
+      Book.create(seedBooks, (err, data) => {
+        res.send(data)
+      })
     })
-  })
 })
 
 // Index route
 router.get('/', (req, res) => {
   Book.find({},(err, allBooks) => {
-    res.render('books/index.ejs',
+    r es.render('books/index.ejs',
       {
         books: allBooks
       }
