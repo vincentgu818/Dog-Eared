@@ -1,72 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const Book = require('../models/books.js')
-const request = require('request')
 const rp = require('request-promise')
 const session = require('express-session')
 
-const bookQueries = []
-const bookLinks = []
 let seedBooks = [] // require('../models/seed_books.js')
 
-router.use(session({
-  secret: "thisisasecret",
-  resave: false,
-  saveUninitialized: false
-}))
-
-// rp('https://www.googleapis.com/books/v1/volumes?q=').
-//   then((body) => {
-//     let jsonBody = JSON.parse(body)
-//      for(let googleBook of jsonBody.items) {
-//
-//        let book = {}
-//
-//        book.title = googleBook.volumeInfo.title
-//        if(googleBook.volumeInfo.subtitle) {
-//          book.title += ': '+googleBook.volumeInfo.subtitle
-//        }
-//
-//       book.authors = googleBook.volumeInfo.authors
-//
-//       book.categories = googleBook.volumeInfo.categories
-//
-//       book.description = googleBook.volumeInfo.description
-//
-//       if(googleBook.volumeInfo.imageLinks) {
-//         book.img = googleBook.volumeInfo.imageLinks.thumbnail
-//       }
-//
-//       if(googleBook.saleInfo.listPrice) {
-//         book.price = googleBook.saleInfo.listPrice.amount
-//       }
-//
-//       seedBooks.push(book)
-//     }
-//   })
-// //
-//
-const requestFromNYT = (body) => {
-  let jsonBody = JSON.parse(body)
-  for(let nytBook of jsonBody.results.books) {
-    let bookQuery = nytBook.title + ' ' + nytBook.author
-    if(bookQueries.indexOf(bookQuery) === -1) bookQueries.push(bookQuery)
-  }
-}
-
-const requestFromGoogle = (body) => {
-  let jsonBody = JSON.parse(body)
-  bookLinks.push(body.items[0].selfLink)
-  console.log(bookLinks.length)
-}
-
-const requestOneFromGoogle = (htmlString) => {
-  if (!error && response.statusCode == 200) {
-    let jsonBody = JSON.parse(htmlString)
-    console.log(body.volumeInfo.title);
-  }
-}
-//
 // Seed route
 router.get('/seed/:search', (req, res) => {
   seedBooks = []

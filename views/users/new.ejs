@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
-        <h1>Create User</h1>
-        <form action="/users" method="POST">
-            <input type="text" name="username" placeholder="username"/>
-            <input type="password" name="password" />
-            <input type="submit" value="Create User" />
-        </form>
-    </body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dog-Eared - New Book</title>
+    <link rel="stylesheet" href="/css/master.css">
+  </head>
+  <body>
+    <form class="user-info" action="/users" method="POST">
+      <fieldset>
+        <legend>USER INFORMATION</legend>
+        <label for="username">USERNAME: </label>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">PASSWORD: </label>
+        <input type="password" id="password" name="password"><br>
+        <label for="isAdmin">ADMINISTRATOR </label>
+        <input type="checkbox" name="isAdmin"><br>
+        <input class="form_button" type="submit" value="CREATE USER">
+      </fieldset>
+    </form>
+  </body>
 </html>

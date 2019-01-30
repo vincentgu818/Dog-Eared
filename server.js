@@ -30,14 +30,15 @@ db.on('open' , ()=>{})
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
-app.use('/books',booksController)
-app.use('/users',usersController)
-app.use('/sessions',sessionsController)
 app.use(session({
   secret: "thisisasecret",
   resave: false,
   saveUninitialized: false
 }))
+app.use('/books',booksController)
+app.use('/users',usersController)
+app.use('/sessions',sessionsController)
+
 
 app.listen(PORT, () => {
   console.log('listening...')

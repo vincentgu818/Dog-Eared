@@ -5,34 +5,33 @@ const User = require('../models/users.js')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
-router.use(session({
-  secret: "thisisasecret",
-  resave: false,
-  saveUninitialized: false
-}))
-
 // New route
 router.get('/new', (req, res) => {
-    res.render('sessions/new.ejs');
+    res.render('sessions/new.ejs')
 });
 
 // Create route
 router.post('/', (req, res)=>{
     User.findOne({ username: req.body.username }, (err, foundUser) => {
         if(req.body.password == foundUser.password){
-          req.session.currentUser = foundUser;
-          res.redirect('/books/');
+          req.session.currentUser = foundUser
+          if(!req.session.cart) req.session.cart = []
+          req.session.cart = req.session.currentUser.cart.concat(req.session.cart)
+          res.redirect('/books/')
         } else {
-          res.send('wrong password');
+          res.send('wrong password')
         }
-    });
-});
+    })
+})
 
 // Destroy route
 router.delete('/', (req, res) => {
-  req.session.destroy(()=>{
-    res.redirect('/books');
-  });
+  User.findByIdAndUpdate(req.session.currentUser._id, {$set: { cart: req.session.cart }}, (err, updatedUser) => {
+    console.log(updatedUser)
+    req.session.destroy(() => {
+      res.redirect('/books')
+    })
+  })
 })
 
 module.exports = router

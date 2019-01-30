@@ -3,26 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>Dog-Eared - Shopping Cart</title>
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Gravitas+One" rel="stylesheet">
     <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
-    <h1 id="index_h1">Your Shopping Cart</h1>
-    <div id="index_container">
+    <h1 class="index_h1">Your Shopping Cart</h1>
+    <div id="cart_container">
       <% let cartTotal = 0
-      if(contents.length === 0) { %>
+      if(cart.length === 0) { %>
         <div>Your cart is empty!</div>
       <% } else {
-      for(let book of contents) {
+      for(let book of cart) {
         cartTotal += book.price %>
-        <div>
-          <h4><%=book.title%></h4>
-          <a href="/books/<%=book._id%>"><img src="<%=book.img%>"></a>
-          $<%=book.price%>
+        <div class="cart_line">
+          <div class="cart_line_left">
+            <a href="/books/<%=book._id%>"><img class="cart_img" src="<%=book.img%>"></a>
+            <h4><%=book.title%></h4>
+          </div>
+          <div class="cart_line_right">$<%=book.price.toFixed(2)%></div>
         </div>
       <% } } %>
-      <div>Cart Total: $<%=cartTotal%></div>
-      <a href="/books"><- Continue Shopping</a>
-      <a href="/books">Checkout -></a>
+      <div class="cart_line">
+        <div class="cart_line_left">
+          <h4>Cart Total:</h4>
+        </div>
+        <div class="cart_line_right">$<%=cartTotal.toFixed(2)%></div>
+      </div>
+      <div class="cart_line">
+        <div class="cart_line_left"><a href="/books"><- Continue Shopping</a></div>
+        <div class="cart_line_right"><a href="#">Checkout -></a></div>
+      </div>
+
     </div>
   </body>
 </html>
