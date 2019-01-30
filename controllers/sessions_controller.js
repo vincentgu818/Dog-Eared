@@ -13,7 +13,7 @@ router.use(session({
 
 // New route
 router.get('/new', (req, res) => {
-    res.render('users/new.ejs');
+    res.render('sessions/new.ejs');
 });
 
 // Create route

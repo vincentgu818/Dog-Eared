@@ -106,9 +106,10 @@ router.get('/seed/:search', (req, res) => {
 // Index route
 router.get('/', (req, res) => {
   Book.find({},(err, allBooks) => {
-    r es.render('books/index.ejs',
+    res.render('books/index.ejs',
       {
-        books: allBooks
+        books: allBooks,
+        currentUser: req.session.currentUser
       }
     )
   })

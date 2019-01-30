@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
-    <div id=show_container>
-      <div class=show_book>
-        <h1><%=book.title%></h1>
-        <img src="<%=book.img%>"><br>
-        <div><%=book.description%></div>
+    <div id="show_container">
+      <div class="show_book">
+        <h1 class="show_title"><%=book.title%></h1>
+        <img class="show_img" src="<%=book.img%>">
+        <%=book.description%>
         <div>Price: $<%=book.price%></div>
         <div>
           <% if(book.qty > 0) { %>
             <%=book.qty%> in stock
           </div>
           <form action="/users/<%=book.id%>/add_to_cart?_method=PUT" method="POST">
-            <input class="buy_button" type="submit" value="Add to Cart">
+            <input class="add_to_cart_button" type="submit" value="Add to Cart">
           </form>
           <% } else { %>
             Out of stock

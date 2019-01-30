@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Dog-Eared</title>
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Gravitas+One" rel="stylesheet">
     <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
-    <h1 id="index_h1">Dog-Eared</h1>
+    <h1 class="index_h1">Dog-Eared</h1>
     <nav>
       <a href="/books/new">Add a Book</a>
       <% if(currentUser) { %>
@@ -16,21 +17,25 @@
         </form>
       <% } else { %>
       <a href="/sessions/new">Log In</a></li>
-      <% } %>
       <a href="/users/new">Register</a></li>
+      <% } %>
       <a href="/users/cart">View Cart</a>
     </nav>
     <div id="index_container">
-      <% while(books.length > 0) {
-        let i = Math.floor(Math.random()*books.length)
-        let book = books[i]
-        books.splice(i,1) %>
-        <div>
-          <h4><%=book.title%></h4>
-          <a href="/books/<%=book.id%>"><img src="<%=book.img%>"></a>
-          $<%=book.price%>
-        </div>
-      <% } %>
+      <div id="books_container">
+        <% while(books.length > 0) {
+          let i = Math.floor(Math.random()*books.length)
+          let book = books[i]
+          books.splice(i,1) %>
+          <a href="/books/<%=book.id%>">
+            <div class="book_tile">
+            <!-- <%=book.title%> -->
+              <img class="book_tile_img" src="<%=book.img%>"></a>
+              <div>$<%=book.price.toFixed(2)%></div>
+            </div>
+          </a>
+        <% } %>
+      </div>
     </div>
   </body>
 </html>
