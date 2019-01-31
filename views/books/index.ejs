@@ -20,10 +20,10 @@
       <% } else { %>
       <a href="/sessions/new">Log In</a></li>
       <a href="/users/new">Register</a></li>
-      <% } %>
-      if(!currentUser || (currentUser && !currentUser.isAdmin)) {
+      <% }
+      if(!currentUser || (currentUser && !currentUser.isAdmin)) { %>
         <a href="/users/cart">View Cart</a>
-      }
+      <% } %>
     </nav>
     <div id="index_container">
       <div id="books_container">
