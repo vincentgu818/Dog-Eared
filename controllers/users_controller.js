@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
     req.body.isAdmin = false;
   }
   User.create(req.body, (err, createdUser)=>{
-    res.redirect('/books/')
+    res.redirect('/books')
   })
 })
 
@@ -30,6 +30,13 @@ router.get('/cart', (req, res) => {
       cart: req.session.cart
     }
   )
+})
+
+// Checkout route
+router.get('/cart/checkout', (req, res) => {
+  req.session.cart = []
+  console.log('checkout route');
+  res.redirect('/books')
 })
 
 // Add to Cart route

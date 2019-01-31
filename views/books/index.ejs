@@ -21,7 +21,9 @@
       <a href="/sessions/new">Log In</a></li>
       <a href="/users/new">Register</a></li>
       <% } %>
-      <a href="/users/cart">View Cart</a>
+      if(!currentUser || (currentUser && !currentUser.isAdmin)) {
+        <a href="/users/cart">View Cart</a>
+      }
     </nav>
     <div id="index_container">
       <div id="books_container">
