@@ -61,6 +61,8 @@ router.get('/new', (req, res) => {
 
 // Create route
 router.post('/', (req, res) => {
+  req.body.authors = req.body.authors.split(', ')
+  req.body.categories = req.body.categories.split(', ')
   Book.create(req.body, (err, createdBook) => {
     res.redirect('/books')
   })
@@ -74,6 +76,22 @@ router.get('/:id/edit', (req, res) => {
         book: foundBook
       }
     )
+  })
+})
+
+// Update quantities route
+router.get('/update_qty', (req, res) => {
+  Book.update({qty: 0}, {$inc: {qty: 100}}, {multi: true}, (err, numUpdated) => {
+    res.send(numUpdated)
+  })
+})
+
+// Update route
+router.put('/:id', (req, res) => {
+  req.body.authors = req.body.authors.split(', ')
+  req.body.categories = req.body.categories.split(', ')
+  Book.findByIdAndUpdate(req.params.id, req.body, (err, updatedBook) => {
+    res.redirect('/books/'+req.params.id)
   })
 })
 
@@ -96,7 +114,8 @@ router.get('/:id', (req, res) => {
   Book.findById(req.params.id, (err, foundBook) => {
     res.render('books/show.ejs',
       {
-        book: foundBook
+        book: foundBook,
+        currentUser: req.session.currentUser
       }
     )
   })

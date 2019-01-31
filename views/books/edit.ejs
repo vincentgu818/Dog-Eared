@@ -11,6 +11,20 @@
         <legend>BOOK INFORMATION</legend>
         <label for="title">TITLE: </label>
         <input type="text" id="title" name="title" value="<%=book.title%>"><br>
+        <label for="authors">AUTHORS: </label>
+        <% let authors = ""
+          for(let i=0; i<book.authors.length; i++) {
+            if(i !== 0) authors += ', '
+            authors += book.authors[i]
+          } %>
+        <input type="text" id="authors" name="authors" value="<%=authors%>"><br>
+        <label for="categories">CATEGORIES: </label>
+        <% let categories = ""
+          for(let i=0; i<book.categories.length; i++) {
+            if(i !== 0) categories += ', '
+            categories += book.categories[i]
+          } %>
+        <input type="text" id="categories" name="categories" value="<%=categories%>"><br>
         <label for="img">IMAGE URL: </label>
         <input type="text" id="img" name="img" value="<%=book.img%>"><br>
         <div class="number_inputs">

@@ -12,19 +12,20 @@
         <img src="<%=book.img%>"><br>
         <div><%=book.description%></div>
         <div>Price: $<%=book.price.toFixed(2)%></div>
-          <% if(book.qty > 0) { %>
-          <form action="/users/<%=book.id%>/add_to_cart?_method=PUT" method="POST">
-            <input class="add_to_cart_button" type="submit" value="Add to Cart">
-          </form>
-          <% } else { %>
-          <div>
-            Out of stock
-          </div>
-          <% } %>
+        <% if(currentUser && currentUser.isAdmin) { %>
         <a href="/books/<%=book.id%>/edit"><div class="edit_button">Edit</div></a>
         <form action="/books/<%=book.id%>?_method=DELETE" method="POST">
           <input class="delete_button" type="submit" value="Delete">
         </form>
+        <% } else if(book.qty > 0) { %>
+        <form action="/users/<%=book.id%>/add_to_cart?_method=PUT" method="POST">
+          <input class="add_to_cart_button" type="submit" value="Add to Cart">
+        </form>
+        <% } else { %>
+        <div>
+          Out of stock
+        </div>
+        <% } %>
       </div>
       <a href="/books"><- Back to Index</a>
     </div>
